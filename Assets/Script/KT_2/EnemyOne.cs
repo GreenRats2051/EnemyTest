@@ -1,8 +1,7 @@
 public class EnemyOne : Enemy
 {
-    protected override void Start()
+    void Start()
     {
-        base.Start();
         Attack();
     }
 

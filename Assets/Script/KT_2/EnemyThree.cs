@@ -4,14 +4,14 @@ public class EnemyThree : Enemy
 {
     private Transform player;
 
-    private void Start()
+    public void Initialize(Transform playerTransform)
     {
-        player = FindObjectOfType<InputListener>().transform;
+        player = playerTransform;
     }
 
     private void Update()
     {
-        if (Vector2.Distance(transform.position, player.position) < 5f) 
+        if (player != null && Vector2.Distance(transform.position, player.position) < 5f)
         {
             Attack();
         }
@@ -23,6 +23,6 @@ public class EnemyThree : Enemy
 
     public override void Attack()
     {
-        animator.SetTrigger("Attack");
+        Animator.SetTrigger("Attack");
     }
 }

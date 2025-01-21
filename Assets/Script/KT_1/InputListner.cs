@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,8 +10,10 @@ public class InputListener : MonoBehaviour
     private Animator animator;
     private EnemyManager enemyManager;
 
-    private void Start()
+    public void Initialize(EnemyManager enemyManager)
     {
+        this.enemyManager = enemyManager;
+
         _attackContext = new AttackContext();
         _attackStrategies = new Dictionary<Button, IStratergy>
         {
@@ -21,14 +22,12 @@ public class InputListener : MonoBehaviour
             { GameObject.Find("Button (Legacy)_03").GetComponent<Button>(), new AttackThree(30) }
         };
 
-        // Инициализация Animator
         animator = GetComponent<Animator>();
 
         foreach (var button in _attackStrategies.Keys)
         {
             button.onClick.AddListener(() => SetCurrentAttack(button));
         }
-        enemyManager = FindObjectOfType<EnemyManager>();
     }
 
     private void SetCurrentAttack(Button button)

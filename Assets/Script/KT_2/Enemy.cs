@@ -2,17 +2,14 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    public Animator animator;
+    [SerializeField] protected Animator animator;
 
-    protected virtual void Start()
-    {
-        
-    }
+    protected Animator Animator => animator;
 
     public abstract void Attack();
 
     public virtual void Idle()
     {
-        animator.SetTrigger("Idle");
+        Animator.SetTrigger("Idle");
     }
 }

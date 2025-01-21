@@ -1,29 +1,43 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public Enemy[] enemies;
+    [SerializeField] private Enemy[] enemies;
     private int currentEnemyIndex = 0;
-    private Enemy currentEnemy;
 
     private void Start()
     {
-        if (enemies.Length != 0)
+        if (enemies.Length > 0)
         {
-            enemies[0].gameObject.SetActive(false);
+            ChangeEnemy();
         }
     }
 
     public void ChangeEnemy()
     {
+        if (enemies.Length == 0) return;
+
+        enemies[currentEnemyIndex].gameObject.SetActive(false);
+
         currentEnemyIndex = (currentEnemyIndex + 1) % enemies.Length;
-        for (int i = 0; i < enemies.Length; i++)
+
+        enemies[currentEnemyIndex].gameObject.SetActive(true);
+    }
+
+    public void InitializeEnemies(Transform playerTransform)
+    {
+        foreach (var enemy in enemies)
         {
-            enemies[i].gameObject.SetActive(currentEnemyIndex == i);
+            if (enemy is EnemyThree enemyThree)
+            {
+                enemyThree.Initialize(playerTransform);
+            }
         }
     }
-}
 
+
+    public Enemy GetCurrentEnemy()
+    {
+        return enemies[currentEnemyIndex];
+    }
+}
