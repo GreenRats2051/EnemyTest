@@ -17,16 +17,16 @@ public class InputListener : MonoBehaviour
         _attackContext = new AttackContext();
         _attackStrategies = new Dictionary<Button, IStratergy>
         {
-            { GameObject.Find("Button (Legacy)_01").GetComponent<Button>(), new AttackOne(10) },
-            { GameObject.Find("Button (Legacy)_02").GetComponent<Button>(), new AttackTwo(20) },
-            { GameObject.Find("Button (Legacy)_03").GetComponent<Button>(), new AttackThree(30) }
+            { GameObject.Find("Button (Legacy)_01").GetComponent<Button>(), new AttackOne(10) }, // «ависимость от конкретных кнопок.
+            { GameObject.Find("Button (Legacy)_02").GetComponent<Button>(), new AttackTwo(20) }, // ѕотенциальна€ проблема: жестко закодированные названи€ кнопок.
+            { GameObject.Find("Button (Legacy)_03").GetComponent<Button>(), new AttackThree(30) } // ѕотенциальна€ проблема: жестко закодированные названи€ кнопок.
         };
 
         animator = GetComponent<Animator>();
 
         foreach (var button in _attackStrategies.Keys)
         {
-            button.onClick.AddListener(() => SetCurrentAttack(button));
+            button.onClick.AddListener(() => SetCurrentAttack(button)); // «ависимость от событий кнопок.
         }
     }
 
@@ -49,6 +49,7 @@ public class InputListener : MonoBehaviour
 
     private void PlayAttackAnimation(Button button)
     {
+        // «ависимость от конкретных названий кнопок и анимаций.
         if (button.name == "Button (Legacy)_01")
         {
             enemyManager.ChangeEnemy();
@@ -63,7 +64,7 @@ public class InputListener : MonoBehaviour
 
     private ColorBlock GetHighlightedColorBlock()
     {
-        ColorBlock colors = new ColorBlock
+        return new ColorBlock
         {
             normalColor = Color.white,
             highlightedColor = Color.yellow,
@@ -73,6 +74,5 @@ public class InputListener : MonoBehaviour
             colorMultiplier = 1,
             fadeDuration = 0.1f
         };
-        return colors;
     }
 }
